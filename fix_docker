@@ -1,0 +1,3 @@
+groupadd docker
+gpasswd -a username docker
+service docker restart 
