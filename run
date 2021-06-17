@@ -1,0 +1,5 @@
+#./clean
+result=`python3 gen-docker-compose.py --datapath /opt/chia/l1 -c 64`
+docker-compose up -d
+echo $result | xargs python3 export_key.py -d 
+python3 batch_send_transaction.py -r http://172.16.4.40:19000 -k your_key

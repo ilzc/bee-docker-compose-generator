@@ -12,9 +12,11 @@ parser.add_argument('--input', '-i', help='输入示例文件', default="sample.
 parser.add_argument('--output', '-o', help='输出文件', default="docker-compose.yml")
 parser.add_argument('--datapath', '-p', help='数据文件路径', required=True)
 parser.add_argument('--count', '-c', help='节点个数', default=3, type=int)
+parser.add_argument('--user', '-u', help='指定系统用户名', default="root")
 args = parser.parse_args()
 
 count = args.count
+paths = ""
 with open(args.input, 'r') as stream:
     try:
         template = yaml.safe_load(stream)
@@ -26,8 +28,12 @@ with open(args.input, 'r') as stream:
         for i in range(count):
             clef_n = "clef-" + str(i+1)
             clef_data = copy.deepcopy(clef_template)
-            clef_data["volumes"] = [clef_n + ":/app/data"]
+            clef_data["volumes"] = [args.datapath + "/" + clef_n + ":/app/data"]
+            clef_data["container_name"] = clef_n
+            clef_data["user"] = args.user
             services_data[clef_n] = clef_data
+
+            paths = paths + " " + args.datapath + "/" + clef_n
 
         #generate bee-N
         bee_template = services_data['bee-1']
@@ -48,7 +54,9 @@ with open(args.input, 'r') as stream:
                 bee_data["ports"][index] = port
 
             bee_data["depends_on"] = ["clef-" + str(i+1)]
-            bee_data["volumes"] = ["bee-" + str(i+1) + ":/home/bee/.bee"]
+            bee_data["volumes"] = [args.datapath + "/" + bee_n + ":/home/bee/.bee"]
+            bee_data["container_name"] = bee_n
+            bee_data["user"] = args.user
             services_data[bee_n] = bee_data
 
         #generate volumes
@@ -61,5 +69,6 @@ with open(args.input, 'r') as stream:
                     lambda dumper, value: dumper.represent_scalar(u'tag:yaml.org,2002:null', '')
                 )
             yaml.safe_dump(template, outfile, default_flow_style=False)
+        print(paths)
     except yaml.YAMLError as exc:
         print(exc)
