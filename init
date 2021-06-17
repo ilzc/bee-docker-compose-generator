@@ -7,5 +7,5 @@
 apt install python3-pip -y
 python3 -m venv .env
 pip install web3
-pip install pycrypto
+pip install pycryptodome
 pip install ethtoken
