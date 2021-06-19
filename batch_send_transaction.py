@@ -72,7 +72,7 @@ with open(args.input, newline='') as csvfile:
             eth_transaction = {
             'from': from_addr,
             'to': to_addr,
-            'value': w3.toWei(0.1, "ether"),
+            'value': w3.toWei(eth_initail_value, "ether"),
             'gas': 21000,
             'gasPrice': w3.toWei(gasPrice, 'gwei'),
             'nonce': startNonce + i,
