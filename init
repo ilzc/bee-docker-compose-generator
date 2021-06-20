@@ -5,6 +5,7 @@ curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compo
 chmod +x /usr/local/bin/docker-compose
 
 apt install python3-pip -y
+apt install jq -y
 python3 -m venv .env
 pip install web3
 pip install pycryptodome
