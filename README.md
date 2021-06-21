@@ -21,4 +21,4 @@ docker-compose 环境变量，需要修改BEE_SWAP_ENDPOINT为eth rpc节点地�
 导出public key及private key，方便备份
 
 ### python3 batch_send_transaction.py -r http://172.16.4.40:19000 -k your_key -bzz 0 -eth 0.01
--r 为eth rpc节点地址， your_key为发送交易的钱包私钥，主网不需要质押bzz，因为设为0，eth用于支付gas手续费
+-r 为eth rpc节点地址， your_key为发送交易的钱包私钥，主网不需要质押bzz，设为0，eth用于支付gas手续费
