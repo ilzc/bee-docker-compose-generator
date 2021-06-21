@@ -12,7 +12,7 @@ services:
     command: full
 
   bee-1:
-    image: ethersphere/bee:1.0.0-rc4
+    image: ethersphere/bee:stable
     restart: unless-stopped
     environment:
       - BEE_API_ADDR
